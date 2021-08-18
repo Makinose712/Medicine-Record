@@ -20,6 +20,19 @@ export default function App() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    const { currentUser } = firebase.auth();
+    const db = firebase.firestore();
+    const ref = db.collection(`users/${currentUser.uid}/drugs`);
+    ref.add({
+      bodyText: {data}
+    })
+    .then((docRef) => {
+      console.log('Created', docRef.id);
+    })
+    .catch((error) => {
+      console.log('Error!', error);
+    });
    
   };
 

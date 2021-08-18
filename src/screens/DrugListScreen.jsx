@@ -1,5 +1,6 @@
 import React,{ useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+import firebase from 'firebase';
 
 import DrugList from '../components/DrugList';
 import DrugListB from '../components/DrugListB';
@@ -12,6 +13,21 @@ export default function DrugListScreen(props) {
     navigation.setOptions({
       headerRight: () => <LogOutButton />,
     });
+  }, []);
+
+  useEffect(() => {
+    const db = firebase.firestore();
+    const { currentUser } = firebase.auth();
+    let unsubscribe = () => {};
+    if (currentUser) {
+    const ref = db.collection(`users/${currentUser.uid}/drugs`);
+    unsubscribe = ref.onSnapshot((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log(doc.id, doc.data());
+      });
+    });
+    }
+    return unsubscribe;
   }, []);
   
   return (
