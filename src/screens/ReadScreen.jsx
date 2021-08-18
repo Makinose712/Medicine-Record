@@ -6,6 +6,7 @@ import Button from '../components/Button';
 export default function ReadScreen(props) {
     const { navigation } = props;
     return(
+        
     <View stale={styles.container}>
     <View style={styles.inputContainer}>
     <Text>QRコード登録</Text>
@@ -16,7 +17,7 @@ export default function ReadScreen(props) {
      label="読取開始"
      onPress={() => { navigation.reset({
         index: 0,
-        routes: [{ name: 'DrugList'}],
+        routes: [{ name: 'Qr'}],
     });
     }}
     />

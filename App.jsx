@@ -6,15 +6,17 @@ import DrugListScreen from './src/screens/DrugListScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import ReadScreen from './src/screens/ReadScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import QrScreen from './src/screens/QrScreen';
 
 import { firebaseConfig } from './env';
 
-const Stack = createStackNavigator();
+require('firebase/firestore');
 
 if (firebase.apps.length === 0 ) {
   firebase.initializeApp(firebaseConfig);
 }
 
+const Stack = createStackNavigator();
 
 export default function App() {
     return (
@@ -48,6 +50,7 @@ export default function App() {
                 cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
             }}
               />
+            <Stack.Screen name="Qr" component={QrScreen} />
 
         </Stack.Navigator>
         </NavigationContainer>
