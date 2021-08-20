@@ -6,8 +6,8 @@ export default function Button(props) {
     const { label, onPress } = props;
     return(
         <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-        <Text style={styles.buttonLabel}>{label}</Text>
-    </TouchableOpacity>
+            <Text style={styles.buttonLabel}>{label}</Text>
+        </TouchableOpacity>
     );
 }
 

@@ -1,48 +1,34 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { shape, string, arrayOf } from 'prop-types';
 
-export default function DrugListB() {
+
+export default function DrugListB(props) {
+    const { drugs } = props;
+
   return(
-    <>
     <View>
-        <View style={styles.drugListItem2}>
-            <View>
-            <Text style={styles.drugListItemTitle2}>ネキシウムカプセル20mg</Text>
-            <Text style={styles.drugListItemTitle}>1日1回　朝食後</Text>
+        {drugs.map((drug) => (
+            <View key={drug.id}>
+                <View style={styles.drugListItem2}>
+                    <View>
+                        <Text style={styles.drugListItemTitle2}>{drug.bodyText}</Text>
+                        <Text style={styles.drugListItemTitle}>1日1回　朝食後</Text>
+                    </View>
+                </View>
             </View>
-        </View>
+        ))}}  
     </View>
-
-    <View>
-        <View style={styles.drugListItem2}>
-            <View>
-            <Text style={styles.drugListItemTitle2}>パルモディア錠0.1mg</Text>
-            <Text style={styles.drugListItemTitle}>1日2回　朝夕食後</Text>
-            </View>
-        </View>
-    </View>
-
-    <View>
-        <View style={styles.drugListItem2}>
-            <View>
-            <Text style={styles.drugListItemTitle2}>メトホルミン錠250mg「MT」</Text>
-            <Text style={styles.drugListItemTitle}>1日2回　朝夕食後</Text>
-            </View>
-        </View>
-    </View>
-
-    <View>
-        <View style={styles.drugListItem2}>
-            <View>
-            <Text style={styles.drugListItemTitle2}>フォシーガ錠10mg</Text>
-            <Text style={styles.drugListItemTitle}>1日1回　朝食後</Text>
-            </View>
-        </View>
-    </View>
-    </>
 
   );
 }
+
+DrugListB.propTypes = {
+    drugs: arrayOf(shape({
+        id: string,
+        bodyText: string,
+    })).isRequired,
+};
 
 const styles = StyleSheet.create({
 

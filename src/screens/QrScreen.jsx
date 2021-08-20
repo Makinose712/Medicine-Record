@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import CircleButton from '../components/CircleButton';
+import { useNavigation } from '@react-navigation/core';
 
 import firebase from 'firebase';
 
@@ -9,6 +10,7 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [bodyText, setBodyText] = useState('');
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -33,6 +35,7 @@ export default function App() {
     .catch((error) => {
       console.log('Error!', error);
     });
+
    
   };
 
@@ -43,21 +46,6 @@ export default function App() {
     return <Text>No access to camera</Text>;
   }
 
-  function handlePress(){
-    const { currentUser } = firebase.auth();
-    const db = firebase.firestore();
-    const ref = db.collection(`users/${currentUser.uid}/drugs`);
-    ref.add({
-      bodyText,
-    })
-    .then((docRef) => {
-      console.log('Created', docRef.id);
-    })
-    .catch((error) => {
-      console.log('Error!', error);
-    });
-
-  }
 
   return (
     <View style={styles.container}>
@@ -66,10 +54,11 @@ export default function App() {
         style={StyleSheet.absoluteFillObject}
         onChangeText={(text) => { setBodyText(text); }}
       />
-      {scanned && <Button title={'もう一度スキャン'} onPress={() => setScanned(false)} />}
-      <CircleButton
+       {scanned && <Button title={'もう一度スキャン'} onPress={() => setScanned(false)} />}
+
+       <CircleButton
       label="実行"
-      onPress={handlePress}
+      onPress={() => { navigation.navigate('DrugList'); }}
 
       />
     </View>
